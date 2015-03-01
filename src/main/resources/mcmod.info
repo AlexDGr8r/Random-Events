@@ -1,0 +1,16 @@
+[
+{
+  "modid": "randomevents",
+  "name": "Random Events",
+  "description": "Creates random events at random times.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["AlexDGr8r"],
+  "credits": "AlexDGr8r for his desire to program.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
