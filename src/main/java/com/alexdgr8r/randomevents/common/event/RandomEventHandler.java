@@ -5,21 +5,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
+import com.alexdgr8r.randomevents.common.ModRandomEvents;
 import com.alexdgr8r.randomevents.common.event.Event.EventStage;
 
 public class RandomEventHandler {
 	
 	public final static List<Event> events = new ArrayList<Event>();
-	private final static Random random = new Random();
 	private static float weightedSum = 0.0F;
 	
 	private Event currentEvent = null;
+	private Random random = new Random();
 	
 	@SubscribeEvent
 	public void onServerTick(ServerTickEvent event)
@@ -37,6 +37,7 @@ public class RandomEventHandler {
 			{
 				this.currentEvent = new EventNone(null);
 				this.currentEvent.init(new Object[] { server });
+				ModRandomEvents.instance.logger.info("Event set to EventNone");
 			}
 			else
 			{
@@ -52,6 +53,7 @@ public class RandomEventHandler {
 					{
 						this.currentEvent = event;
 						event.init(new Object[] { server });
+						ModRandomEvents.instance.logger.info("Event set to " + event.toString());
 						break;
 					}
 				}
@@ -62,7 +64,21 @@ public class RandomEventHandler {
 		{
 			// Update Event //
 			currentEvent.update(new Object[] { server });
+			ModRandomEvents.instance.logger.info("Updated Current Event.");
 		}
+	}
+	
+	public void stopCurrentEvent(Object[] args)
+	{
+		ModRandomEvents.instance.logger.info("Stopping current event...");
+		
+		if (this.currentEvent != null)
+		{
+			this.currentEvent.end(args);
+			this.currentEvent = null;
+		}
+		
+		ModRandomEvents.instance.logger.info("Current event stopped.");
 	}
 	
 	public Event getCurrentEvent() 

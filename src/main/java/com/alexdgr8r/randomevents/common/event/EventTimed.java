@@ -15,16 +15,14 @@ public abstract class EventTimed extends Event
 	@Override
 	protected void doInit(Object[] args)
 	{
-		MinecraftServer server = (MinecraftServer) args[0];
-		long currTime = server.getCurrentTime();
+		long currTime = MinecraftServer.getCurrentTimeMillis();
 		this.endingTime = currTime + (getLength() * 1000L);
 	}
 
 	@Override
 	protected void doUpdate(Object[] args)
 	{
-		MinecraftServer server = (MinecraftServer) args[0];
-		long currTime = server.getCurrentTime();
+		long currTime = MinecraftServer.getCurrentTimeMillis();
 
 		if (currTime >= endingTime)
 		{

@@ -1,17 +1,19 @@
 package com.alexdgr8r.randomevents.common;
 
-import org.apache.logging.log4j.Logger;
-
-import com.alexdgr8r.randomevents.common.event.RandomEventHandler;
-import com.alexdgr8r.randomevents.common.util.ModConfig;
-
-import net.minecraft.init.Blocks;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.event.FMLServerStoppingEvent;
+
+import org.apache.logging.log4j.Logger;
+
+import com.alexdgr8r.randomevents.common.event.RandomEventHandler;
+import com.alexdgr8r.randomevents.common.util.ModConfig;
 
 @Mod(modid = ModRandomEvents.MODID, version = ModRandomEvents.VERSION)
 public class ModRandomEvents
@@ -39,7 +41,6 @@ public class ModRandomEvents
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-    	this.eventHandler = new RandomEventHandler();
 		proxy.init(this, event);
     }
     
@@ -47,6 +48,20 @@ public class ModRandomEvents
     public void postInit(FMLPostInitializationEvent event)
     {
 		proxy.postInit(this, event);
+    }
+    
+    @EventHandler
+    public void onServerStarted(FMLServerStartingEvent event)
+    {
+    	this.eventHandler = new RandomEventHandler();
+    	FMLCommonHandler.instance().bus().register(eventHandler);
+    }
+    
+    @EventHandler
+    public void onServerStopping(FMLServerStoppingEvent event)
+    {
+    	FMLCommonHandler.instance().bus().unregister(eventHandler);
+    	eventHandler.stopCurrentEvent(null/*new Object[] { MinecraftServer.getServer() }*/);
     }
     
 }

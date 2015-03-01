@@ -1,6 +1,7 @@
 package com.alexdgr8r.randomevents.common.util;
 
 import java.io.File;
+
 import net.minecraftforge.common.config.Configuration;
 
 public class ModConfig {
