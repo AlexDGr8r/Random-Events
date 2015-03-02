@@ -16,7 +16,7 @@ import com.alexdgr8r.randomevents.common.util.ModConfig;
 
 public class RandomEventHandler {
 	
-	public final static List<Event> events = new ArrayList<Event>();
+	private final static List<Event> events = new ArrayList<Event>();
 	private static float weightedSum = 0.0F;
 	
 	private Event currentEvent = null;
@@ -86,7 +86,11 @@ public class RandomEventHandler {
 	{
 		return this.currentEvent;
 	}
-	
+	/**
+	 * Registers the event if it is enabled in the config file.
+	 * Config file uses the event's ID to see if it can be registered.
+	 * @param event
+	 */
 	public static void registerEvent(Event event)
 	{
 		// Check if enabled via config
@@ -95,6 +99,49 @@ public class RandomEventHandler {
 			events.add(event);
 			weightedSum += event.getRarity();
 		}
+	}
+	
+	/**
+	 * Unregisters the event if found.
+	 * @param id Event ID
+	 * @return true if removed
+	 */
+	public static boolean unregisterEvent(String id)
+	{
+		if (!id.equalsIgnoreCase("NONE"))
+		{
+			Iterator<Event> iter = events.iterator();
+			
+			while (iter.hasNext()) {
+				Event event = iter.next();
+				if (event.getID().equalsIgnoreCase(id))
+				{
+					iter.remove();
+					weightedSum -= event.getRarity();
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Use this function to retrieve the current instance of an Event.
+	 * @param id Event ID
+	 * @return The Event if found, otherwise null
+	 */
+	public static Event getRegisteredEvent(String id)
+	{
+		Iterator<Event> iter = events.iterator();
+		
+		while (iter.hasNext()) {
+			Event event = iter.next();
+			if (event.getID().equalsIgnoreCase(id))
+			{
+				return event;
+			}
+		}
+		return null;
 	}
 	
 	static
