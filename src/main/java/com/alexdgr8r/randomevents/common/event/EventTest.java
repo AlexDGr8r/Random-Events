@@ -30,4 +30,10 @@ public class EventTest extends Event {
 		return 0.5F;
 	}
 
+	@Override
+	public String getID()
+	{
+		return "TEST";
+	}
+
 }

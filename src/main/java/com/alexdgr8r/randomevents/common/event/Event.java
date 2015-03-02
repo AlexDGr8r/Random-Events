@@ -8,9 +8,13 @@ public abstract class Event {
 	
 	private EventStage currStage = EventStage.INIT;
 	
-	// Be sure to register any needed EventHandlers here
-	// Do not confuse with init(), there is only one instance
-	// of this event. init() is when starting the event.
+	/** 
+	 * Be sure to register any needed EventHandlers here
+	 * Do not confuse with init(), there is only one instance
+	 * of this event. init() is when starting the event.
+	 * 
+	 * @param args usually null unless specified
+	 */
 	public Event(Object[] args) {}
 	
 	// Implement these methods to handle event
@@ -19,6 +23,8 @@ public abstract class Event {
 	protected abstract void doEnd(Object[] args);
 	
 	public abstract float getRarity();
+	
+	public abstract String getID();
 	
 	public final void init(Object[] args)
 	{

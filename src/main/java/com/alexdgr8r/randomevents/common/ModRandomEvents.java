@@ -1,5 +1,6 @@
 package com.alexdgr8r.randomevents.common;
 
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -15,10 +16,11 @@ import org.apache.logging.log4j.Logger;
 import com.alexdgr8r.randomevents.common.event.RandomEventHandler;
 import com.alexdgr8r.randomevents.common.util.ModConfig;
 
-@Mod(modid = ModRandomEvents.MODID, version = ModRandomEvents.VERSION)
+@Mod(modid = ModRandomEvents.MODID, name = ModRandomEvents.MOD_NAME, version = ModRandomEvents.VERSION)
 public class ModRandomEvents
 {
     public static final String MODID = "randomevents";
+    public static final String MOD_NAME = "Random Events";
     public static final String VERSION = "1.0";
     
     @SidedProxy(clientSide="com.alexdgr8r.randomevents.common.ProxyClient", serverSide="com.alexdgr8r.randomevents.common.ProxyCommon")
@@ -61,7 +63,7 @@ public class ModRandomEvents
     public void onServerStopping(FMLServerStoppingEvent event)
     {
     	FMLCommonHandler.instance().bus().unregister(eventHandler);
-    	eventHandler.stopCurrentEvent(null/*new Object[] { MinecraftServer.getServer() }*/);
+    	eventHandler.stopCurrentEvent(new Object[] { MinecraftServer.getServer() });
     }
     
 }

@@ -42,4 +42,10 @@ public class EventNone extends EventTimed {
 		return len;
 	}
 
+	@Override
+	public String getID()
+	{
+		return "NONE";
+	}
+
 }

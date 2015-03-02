@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
 
 import com.alexdgr8r.randomevents.common.ModRandomEvents;
 import com.alexdgr8r.randomevents.common.event.Event.EventStage;
+import com.alexdgr8r.randomevents.common.util.ModConfig;
 
 public class RandomEventHandler {
 	
@@ -64,7 +65,7 @@ public class RandomEventHandler {
 		{
 			// Update Event //
 			currentEvent.update(new Object[] { server });
-			ModRandomEvents.instance.logger.info("Updated Current Event.");
+			//ModRandomEvents.instance.logger.info("Updated Current Event.");
 		}
 	}
 	
@@ -88,8 +89,12 @@ public class RandomEventHandler {
 	
 	public static void registerEvent(Event event)
 	{
-		events.add(event);
-		weightedSum += event.getRarity();
+		// Check if enabled via config
+		if (event instanceof EventNone || ModConfig.instance.get("Event " + event.getID() + " enabled", true, "Set to true to enable event with the ID: " + event.getID()))
+		{
+			events.add(event);
+			weightedSum += event.getRarity();
+		}
 	}
 	
 	static
