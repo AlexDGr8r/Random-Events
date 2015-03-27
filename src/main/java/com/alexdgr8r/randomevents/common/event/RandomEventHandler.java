@@ -102,7 +102,10 @@ public class RandomEventHandler {
 	}
 	
 	/**
-	 * Unregisters the event if found.
+	 * Unregisters the event if found. <br>
+	 * <b>NOTE:</b> The event will continue to run if it is the current event,
+	 * but it will not be included in the pool of events for next time
+	 * since it is unregistered.
 	 * @param id Event ID
 	 * @return true if removed
 	 */

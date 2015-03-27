@@ -30,7 +30,7 @@ public class EventNone extends EventTimed {
 	@Override
 	public float getRarity() 
 	{
-		return 0.95F;
+		return 0.1F;
 	}
 
 	@Override
